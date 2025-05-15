@@ -1,18 +1,17 @@
 package com.snailcatch.snailcatch.util;
 
 public class SlowQueryHolder {
-    private static final ThreadLocal<String> currentQuery = new ThreadLocal<>();
+    private static final ThreadLocal<String> queryHolder = new ThreadLocal<>();
 
     public static void setCurrentQuery(String query) {
-        currentQuery.set(query);
+        queryHolder.set(query);
     }
 
     public static String getCurrentQuery() {
-        return currentQuery.get();
+        return queryHolder.get();
     }
 
     public static void clear() {
-        currentQuery.remove();
+        queryHolder.remove();
     }
 }
-

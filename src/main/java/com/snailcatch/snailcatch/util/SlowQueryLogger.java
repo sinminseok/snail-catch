@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.util.stream.Collectors;
 
+/**
+ * 로그 전송 기능은 로그 수신 서버 배포후 연결
+ */
 @Component
 public class SlowQueryLogger {
 
