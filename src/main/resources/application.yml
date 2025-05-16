@@ -1,7 +1,0 @@
-slowquery:
-  repository-pointcut: execution(* com.myapp..*Repository.*(..))
-
-spring:
-  jpa:
-    properties:
-      hibernate.session_factory.statement_inspector: com.snailcatch.snailcatch.interceptor.SlowQueryInspector

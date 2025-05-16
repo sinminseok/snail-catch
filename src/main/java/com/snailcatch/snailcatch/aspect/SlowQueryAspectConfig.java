@@ -20,6 +20,12 @@ public class SlowQueryAspectConfig {
 
     @Bean
     public Advisor slowQueryAdvisor(SlowQueryProperties properties, SlowQueryLogger logger) {
+
+        String pointcutExpression = properties.getRepositoryPointcut();
+        if (pointcutExpression == null || pointcutExpression.isBlank()) {
+            throw new IllegalArgumentException("`slowquery.repository-pointcut` 설정이 필요합니다.");
+        }
+
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression(properties.getRepositoryPointcut());
 

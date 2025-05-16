@@ -1,15 +1,16 @@
 plugins {
 	id 'java'
+	id 'maven-publish'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.snailcatch'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.1'  // 배포할 버전
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -21,6 +22,27 @@ configurations {
 
 repositories {
 	mavenCentral()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+
+			artifactId = 'snailcatch-sdk'
+		}
+	}
+
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
+			credentials {
+				username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+				password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
 }
 
 dependencies {
