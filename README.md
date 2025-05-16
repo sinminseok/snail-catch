@@ -60,3 +60,12 @@ Log Receiver (Spring 서버)
 - 요청 유효성 검증 
 - NOSQL 에 로그 저장 (MongoDB?)
 
+
+사용 방법 
+
+1. application.yml JPA or QueryDSL 포인트 컷 위치 추가
+
+# (SDK 사용자가 자신의 서비스에서 작성)
+slowquery:
+repository-pointcut: execution(* com.myapp.repository..*(..))
+
