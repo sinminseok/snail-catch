@@ -34,12 +34,16 @@ public class SlowQueryAspectConfig {
             Object result = invocation.proceed();
             long duration = System.currentTimeMillis() - start;
 
+            System.out.println("쿼리 탐지");
             if (duration >= SLOW_QUERY_THRESHOLD_MS) {
                 String method = invocation.getMethod().toGenericString();
                 String sql = SlowQueryHolder.getCurrentQuery();
                 String explain = logger.explain(sql);
                 logger.logSlowQuery(method, sql, duration, explain);
             }
+            System.out.println(invocation.getMethod().toGenericString());
+            System.out.println(SlowQueryHolder.getCurrentQuery());
+            System.out.println(invocation.getMethod().toGenericString());
 
             return result;
         });
