@@ -1,9 +1,7 @@
 package com.snailcatch.snailcatch.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@Component
 @ConfigurationProperties(prefix = "slowquery")
 public class SlowQueryProperties {
     private String repositoryPointcut;

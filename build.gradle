@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '0.1.8'  // 배포할 버전
+version = '0.1.12'  // 배포할 버전
 
 java {
 	toolchain {
@@ -53,7 +53,7 @@ dependencies {
 	implementation 'org.hibernate:hibernate-core:5.6.10.Final'
 	implementation 'org.springframework:spring-context'
 	implementation 'org.projectlombok:lombok:1.18.20'
-
+	implementation 'org.springframework:spring-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

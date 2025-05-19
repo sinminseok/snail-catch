@@ -1,5 +1,6 @@
 package com.snailcatch.snailcatch.util;
 
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +32,8 @@ public class SlowQueryLogger {
         }
     }
 
-    public void logSlowQuery(String methodName, String sql, long duration, String explainPlan) {
-        SlowQueryLog log = new SlowQueryLog(methodName, sql, duration, explainPlan);
+    public void logSlowQuery(String methodName, String sql, long duration) {
+        SlowQueryLog log = new SlowQueryLog(methodName, sql, duration);
         //logSender.send(log); // 큐에 저장 후 비동기 전송
     }
 }
-

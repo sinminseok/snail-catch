@@ -1,1 +1,2 @@
-com.snailcatch.snailcatch.aspect.SlowQueryAspectConfig
+com.snailcatch.snailcatch.aspect.SlowQueryAspect
+com.snailcatch.snailcatch.config.SlowQueryAutoConfiguration

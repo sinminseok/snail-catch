@@ -1,6 +1,5 @@
-package com.snailcatch.snailcatch.config;
+package com.snailcatch.snailcatch.util;
 
-import com.snailcatch.snailcatch.util.SlowQueryHolder;
 import org.hibernate.resource.jdbc.spi.StatementInspector;
 
 public class SlowQueryInspector implements StatementInspector {
