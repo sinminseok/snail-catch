@@ -1,34 +1,36 @@
 package com.snailcatch.snailcatch.domain.query_execution_log;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class QueryExecutionLog implements Comparable<QueryExecutionLog> {
     private final String methodName;
-    private final List<String> sqlQueries;
-    private final List<String> executionPlans;
+    private final String sqlQuery;
+    private final String executionPlan;
     private final LocalDateTime createdAt;
     private final long duration;
 
-    public QueryExecutionLog(String methodName, List<String> sqlQueries, List<String> executionPlans,
-                             LocalDateTime createdAt, long duration) {
+    private QueryExecutionLog(String methodName, String sqlQuery, String executionPlan, long duration) {
         this.methodName = methodName;
-        this.sqlQueries = sqlQueries;
-        this.executionPlans = executionPlans;
-        this.createdAt = createdAt;
+        this.sqlQuery = sqlQuery;
+        this.executionPlan = executionPlan;
+        this.createdAt = LocalDateTime.now();
         this.duration = duration;
+    }
+
+    public static QueryExecutionLog of(String methodName, String sqlQuery, String executionPlan, long duration) {
+        return new QueryExecutionLog(methodName, sqlQuery, executionPlan, duration);
     }
 
     public String getMethodName() {
         return methodName;
     }
 
-    public List<String> getSqlQueries() {
-        return sqlQueries;
+    public String getSqlQuery() {
+        return sqlQuery;
     }
 
-    public List<String> getExecutionPlans() {
-        return executionPlans;
+    public String getExecutionPlan() {
+        return executionPlan;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -1,11 +1,13 @@
 package com.snailcatch.snailcatch.domain.query_execution_log.repository;
 
 import com.snailcatch.snailcatch.domain.query_execution_log.QueryExecutionLog;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
+@Repository
 public class InMemoryQueryExecutionLogRepository {
 
     private final PriorityQueue<QueryExecutionLog> queue;

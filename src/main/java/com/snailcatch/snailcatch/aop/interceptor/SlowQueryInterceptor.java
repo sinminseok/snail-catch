@@ -1,6 +1,8 @@
 package com.snailcatch.snailcatch.aop.interceptor;
 
 import com.snailcatch.snailcatch.collector.QueryCollector;
+import com.snailcatch.snailcatch.domain.query_execution_log.QueryExecutionLog;
+import com.snailcatch.snailcatch.domain.query_execution_log.repository.InMemoryQueryExecutionLogRepository;
 import com.snailcatch.snailcatch.formatter.LogFormatter;
 import com.snailcatch.snailcatch.formatter.SqlFormatter;
 import com.snailcatch.snailcatch.formatter.ExecutionPlanFormatter;
@@ -21,13 +23,16 @@ public class SlowQueryInterceptor implements MethodInterceptor {
     private final QueryCollector queryCollector;
     private final ExecutionPlanFormatter executionPlanLogger;
     private final DataSource dataSource;
+    private final InMemoryQueryExecutionLogRepository inMemoryQueryExecutionLogRepository;
 
     public SlowQueryInterceptor(QueryCollector queryCollector,
                                 ExecutionPlanFormatter executionPlanLogger,
-                                DataSource dataSource) {
+                                DataSource dataSource,
+                                InMemoryQueryExecutionLogRepository inMemoryQueryExecutionLogRepository) {
         this.queryCollector = queryCollector;
         this.executionPlanLogger = executionPlanLogger;
         this.dataSource = dataSource;
+        this.inMemoryQueryExecutionLogRepository = inMemoryQueryExecutionLogRepository;
     }
 
     @Override
@@ -40,7 +45,6 @@ public class SlowQueryInterceptor implements MethodInterceptor {
 
         List<String> collectedQueries = new ArrayList<>(queryCollector.getQueries());
         logQueryDetails(invocation, duration, collectedQueries);
-
         queryCollector.clear();
         return result;
     }
@@ -49,9 +53,16 @@ public class SlowQueryInterceptor implements MethodInterceptor {
         String formattedSqls = formatSqls(queries);
         String executionPlans = generateExecutionPlans(queries);
         String methodName = getMethodSignature(invocation);
-
+        saveLog(formattedSqls, executionPlans, methodName, duration);
         log.info(LogFormatter.formatLog(methodName, duration, formattedSqls, executionPlans));
     }
+
+    private void saveLog(String sql, String executionPlan, String methodName, long duration){
+        QueryExecutionLog queryExecutionLog = QueryExecutionLog.of(methodName, sql, executionPlan, duration);
+        inMemoryQueryExecutionLogRepository.save(queryExecutionLog);
+    }
+
+
 
     private String formatSqls(List<String> queries) {
         return queries.stream()
