@@ -1,9 +1,9 @@
 package com.snailcatch.snailcatch.aop.aspect;
 
 import com.snailcatch.snailcatch.aop.interceptor.SlowQueryInterceptor;
-import com.snailcatch.snailcatch.collector.SlowQueryCollector;
-import com.snailcatch.snailcatch.config.SlowQueryProperties;
-import com.snailcatch.snailcatch.log.ExecutionPlanLogger;
+import com.snailcatch.snailcatch.collector.QueryCollector;
+import com.snailcatch.snailcatch.config.RepositoryProperties;
+import com.snailcatch.snailcatch.formatter.ExecutionPlanFormatter;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
@@ -13,17 +13,16 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 public class SlowQueryAspect {
 
-    private final SlowQueryProperties properties;
+    private final RepositoryProperties properties;
     private final DataSource dataSource;
-    private final ExecutionPlanLogger executionPlanLogger;
-    private final SlowQueryCollector queryCollector;
+    private final ExecutionPlanFormatter executionPlanLogger;
+    private final QueryCollector queryCollector;
 
 
-    public SlowQueryAspect(SlowQueryProperties properties, DataSource dataSource, SlowQueryCollector queryCollector, ExecutionPlanLogger executionPlanLogger) {
+    public SlowQueryAspect(RepositoryProperties properties, DataSource dataSource, QueryCollector queryCollector, ExecutionPlanFormatter executionPlanLogger) {
         this.properties = properties;
         this.dataSource = dataSource;
         this.executionPlanLogger = executionPlanLogger;

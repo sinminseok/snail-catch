@@ -1,11 +1,11 @@
 package com.snailcatch.snailcatch.collector.impl;
 
-import com.snailcatch.snailcatch.collector.SlowQueryCollector;
+import com.snailcatch.snailcatch.collector.QueryCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThreadLocalSlowQueryCollector implements SlowQueryCollector {
+public class ThreadLocalQueryCollector implements QueryCollector {
     private static final ThreadLocal<List<String>> queryHolder = ThreadLocal.withInitial(ArrayList::new);
 
     @Override

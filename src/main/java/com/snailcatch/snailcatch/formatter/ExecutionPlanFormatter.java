@@ -1,4 +1,4 @@
-package com.snailcatch.snailcatch.log;
+package com.snailcatch.snailcatch.formatter;
 
 import com.snailcatch.snailcatch.formatter.LogFormatter;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class ExecutionPlanLogger {
+public class ExecutionPlanFormatter {
 
     public String explainQuery(DataSource dataSource, String sql) {
         List<Map<String, String>> rowsData = new ArrayList<>();

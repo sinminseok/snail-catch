@@ -1,9 +1,9 @@
 package com.snailcatch.snailcatch.aop.interceptor;
 
-import com.snailcatch.snailcatch.collector.SlowQueryCollector;
+import com.snailcatch.snailcatch.collector.QueryCollector;
 import com.snailcatch.snailcatch.formatter.LogFormatter;
 import com.snailcatch.snailcatch.formatter.SqlFormatter;
-import com.snailcatch.snailcatch.log.ExecutionPlanLogger;
+import com.snailcatch.snailcatch.formatter.ExecutionPlanFormatter;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
@@ -18,12 +18,12 @@ public class SlowQueryInterceptor implements MethodInterceptor {
 
     private static final Logger log = LoggerFactory.getLogger(SlowQueryInterceptor.class);
 
-    private final SlowQueryCollector queryCollector;
-    private final ExecutionPlanLogger executionPlanLogger;
+    private final QueryCollector queryCollector;
+    private final ExecutionPlanFormatter executionPlanLogger;
     private final DataSource dataSource;
 
-    public SlowQueryInterceptor(SlowQueryCollector queryCollector,
-                                ExecutionPlanLogger executionPlanLogger,
+    public SlowQueryInterceptor(QueryCollector queryCollector,
+                                ExecutionPlanFormatter executionPlanLogger,
                                 DataSource dataSource) {
         this.queryCollector = queryCollector;
         this.executionPlanLogger = executionPlanLogger;
