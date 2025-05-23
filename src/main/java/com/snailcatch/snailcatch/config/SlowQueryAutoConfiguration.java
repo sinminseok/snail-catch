@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(RepositoryProperties.class)
 @ComponentScan(basePackages = "com.snailcatch.snailcatch")
 public class SlowQueryAutoConfiguration {
-
     @Bean
     public QueryCollector slowQueryCollector() {
         ThreadLocalQueryCollector collector = new ThreadLocalQueryCollector();
