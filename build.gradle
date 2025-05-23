@@ -1,64 +1,67 @@
 plugins {
-	id 'java'
-	id 'maven-publish'
-	id 'org.springframework.boot' version '3.4.5'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '3.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.snailcatch'
-version = '0.1.12'  // 배포할 버전
+version = '0.1.29'  // 배포할 버전
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
 
-			artifactId = 'snailcatch-sdk'
-		}
-	}
+            artifactId = 'snailcatch-sdk'
+        }
+    }
 
-	repositories {
-		maven {
-			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
-			credentials {
-				username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-				password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-			}
-		}
-	}
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-logging'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.springframework:spring-aop'
-	implementation 'org.hibernate:hibernate-core:5.6.10.Final'
-	implementation 'org.springframework:spring-context'
-	implementation 'org.projectlombok:lombok:1.18.20'
-	implementation 'org.springframework:spring-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'p6spy:p6spy:3.9.1'
+    implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework:spring-aop'
+    implementation 'org.hibernate:hibernate-core:5.6.10.Final'
+    implementation 'org.springframework:spring-context'
+    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'org.springframework:spring-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
