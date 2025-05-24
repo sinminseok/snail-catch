@@ -20,7 +20,7 @@ public class InMemoryQueryExecutionLogRepository {
 
     public synchronized void save(QueryExecutionLog log) {
         if (queue.size() >= maxSize) {
-            queue.poll(); // 가장 오래된 로그 제거
+            queue.poll();
         }
         queue.offer(log);
     }

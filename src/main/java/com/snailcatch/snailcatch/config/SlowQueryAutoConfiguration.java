@@ -18,5 +18,4 @@ public class SlowQueryAutoConfiguration {
         QueryCollectorHolder.setCollector(collector);
         return collector;
     }
-
 }

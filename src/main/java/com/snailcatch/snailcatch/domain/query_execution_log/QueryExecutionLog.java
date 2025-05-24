@@ -46,9 +46,4 @@ public class QueryExecutionLog implements Comparable<QueryExecutionLog> {
     public int compareTo(QueryExecutionLog other) {
         return other.createdAt.compareTo(this.createdAt);
     }
-
-    @Override
-    public String toString() {
-        return String.format("Method: %s | CreatedAt: %s | Duration: %dms", methodName, createdAt, duration);
-    }
 }
