@@ -1,15 +1,15 @@
-package com.snailcatch.snailcatch.domain.query_execution_log;
+package com.snailcatch.snailcatch.domain.query_log;
 
 import java.time.LocalDateTime;
 
-public class QueryExecutionLog implements Comparable<QueryExecutionLog> {
+public class QueryLog implements Comparable<QueryLog> {
     private final String methodName;
     private final String sqlQuery;
     private final String executionPlan;
     private final LocalDateTime createdAt;
     private final long duration;
 
-    private QueryExecutionLog(String methodName, String sqlQuery, String executionPlan, long duration) {
+    private QueryLog(String methodName, String sqlQuery, String executionPlan, long duration) {
         this.methodName = methodName;
         this.sqlQuery = sqlQuery;
         this.executionPlan = executionPlan;
@@ -17,8 +17,8 @@ public class QueryExecutionLog implements Comparable<QueryExecutionLog> {
         this.duration = duration;
     }
 
-    public static QueryExecutionLog of(String methodName, String sqlQuery, String executionPlan, long duration) {
-        return new QueryExecutionLog(methodName, sqlQuery, executionPlan, duration);
+    public static QueryLog of(String methodName, String sqlQuery, String executionPlan, long duration) {
+        return new QueryLog(methodName, sqlQuery, executionPlan, duration);
     }
 
     public String getMethodName() {
@@ -43,7 +43,7 @@ public class QueryExecutionLog implements Comparable<QueryExecutionLog> {
 
     // createdAt 기준 내림차순 (최근 로그가 먼저 오도록)
     @Override
-    public int compareTo(QueryExecutionLog other) {
+    public int compareTo(QueryLog other) {
         return other.createdAt.compareTo(this.createdAt);
     }
 }

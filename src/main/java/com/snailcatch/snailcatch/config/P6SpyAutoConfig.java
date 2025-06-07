@@ -15,7 +15,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 @Configuration
 @ConditionalOnClass(P6SpyDriver.class)
 @ConditionalOnProperty(prefix = "snailcatch.p6spy", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class P6SpyAutoConfiguration {
+public class P6SpyAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean

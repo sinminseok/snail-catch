@@ -1,4 +1,4 @@
-package com.snailcatch.snailcatch.formatter;
+package com.snailcatch.snailcatch.global.formatter;
 
 import java.util.*;
 

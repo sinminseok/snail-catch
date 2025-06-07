@@ -1,11 +1,11 @@
-package com.snailcatch.snailcatch.aop.interceptor;
+package com.snailcatch.snailcatch.global.aop.interceptor;
 
-import com.snailcatch.snailcatch.collector.QueryCollector;
-import com.snailcatch.snailcatch.domain.query_execution_log.QueryExecutionLog;
-import com.snailcatch.snailcatch.domain.query_execution_log.repository.InMemoryQueryExecutionLogRepository;
-import com.snailcatch.snailcatch.formatter.LogFormatter;
-import com.snailcatch.snailcatch.formatter.SqlFormatter;
-import com.snailcatch.snailcatch.formatter.ExecutionPlanFormatter;
+import com.snailcatch.snailcatch.global.collector.QueryCollector;
+import com.snailcatch.snailcatch.domain.query_log.QueryLog;
+import com.snailcatch.snailcatch.domain.query_log.repository.InMemoryQueryExecutionLogRepository;
+import com.snailcatch.snailcatch.global.formatter.LogFormatter;
+import com.snailcatch.snailcatch.global.formatter.SqlFormatter;
+import com.snailcatch.snailcatch.global.formatter.ExecutionPlanFormatter;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SlowQueryInterceptor implements MethodInterceptor {
+public class SnailCatchInterceptor implements MethodInterceptor {
 
-    private static final Logger log = LoggerFactory.getLogger(SlowQueryInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(SnailCatchInterceptor.class);
 
     private final QueryCollector queryCollector;
     private final ExecutionPlanFormatter executionPlanLogger;
     private final DataSource dataSource;
     private final InMemoryQueryExecutionLogRepository inMemoryQueryExecutionLogRepository;
 
-    public SlowQueryInterceptor(QueryCollector queryCollector,
+    public SnailCatchInterceptor(QueryCollector queryCollector,
                                 ExecutionPlanFormatter executionPlanLogger,
                                 DataSource dataSource,
                                 InMemoryQueryExecutionLogRepository inMemoryQueryExecutionLogRepository) {
@@ -38,11 +38,9 @@ public class SlowQueryInterceptor implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         queryCollector.clear();
-
         long startTime = System.currentTimeMillis();
         Object result = invocation.proceed();
         long duration = System.currentTimeMillis() - startTime;
-
         List<String> collectedQueries = new ArrayList<>(queryCollector.getQueries());
         logQueryDetails(invocation, duration, collectedQueries);
         queryCollector.clear();
@@ -58,7 +56,7 @@ public class SlowQueryInterceptor implements MethodInterceptor {
     }
 
     private void saveLog(String sql, String executionPlan, String methodName, long duration){
-        QueryExecutionLog queryExecutionLog = QueryExecutionLog.of(methodName, sql, executionPlan, duration);
+        QueryLog queryExecutionLog = QueryLog.of(methodName, sql, executionPlan, duration);
         inMemoryQueryExecutionLogRepository.save(queryExecutionLog);
     }
 

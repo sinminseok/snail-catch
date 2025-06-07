@@ -1,6 +1,6 @@
-package com.snailcatch.snailcatch.collector.impl;
+package com.snailcatch.snailcatch.global.collector.impl;
 
-import com.snailcatch.snailcatch.collector.QueryCollector;
+import com.snailcatch.snailcatch.global.collector.QueryCollector;
 
 import java.util.ArrayList;
 import java.util.List;

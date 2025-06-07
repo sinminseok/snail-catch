@@ -5,8 +5,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
+// ./gradlew publish
+
 group = 'com.snailcatch'
-version = '0.1.29'  // 배포할 버전
+version = '0.1.38'  // 배포할 버전
 
 java {
     toolchain {

@@ -1,4 +1,4 @@
-package com.snailcatch.snailcatch.collector;
+package com.snailcatch.snailcatch.global.collector;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.snailcatch.snailcatch.formatter;
+package com.snailcatch.snailcatch.global.formatter;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
-import com.snailcatch.snailcatch.collector.QueryCollectorHolder;
+import com.snailcatch.snailcatch.global.collector.QueryCollectorHolder;
 
 public class CustomP6SpyFormatter implements MessageFormattingStrategy {
     @Override

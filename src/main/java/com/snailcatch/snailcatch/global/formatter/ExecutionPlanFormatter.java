@@ -1,6 +1,5 @@
-package com.snailcatch.snailcatch.formatter;
+package com.snailcatch.snailcatch.global.formatter;
 
-import com.snailcatch.snailcatch.formatter.LogFormatter;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
