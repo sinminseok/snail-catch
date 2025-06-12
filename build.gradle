@@ -1,17 +1,17 @@
+// 버전 푸쉬
+// ./gradlew clean shadowJar
+// git tag 0.4.3
+// git push origin 0.4.3
+
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'org.springframework.boot' version '3.4.5'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'  // Shadow plugin 추가
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-// 버전 푸쉬
-// ./gradlew publish
-// git tag 0.4.2
-// git push origin 0.4.2
-
 group = 'com.snailcatch'
-version = '0.4.3'
+version = '0.4.4'
 
 java {
     toolchain {
@@ -19,35 +19,8 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            artifactId = 'snailcatch-sdk'
-        }
-    }
-
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }
 
 dependencies {
@@ -66,12 +39,33 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-bootJar {
-    enabled = false
+jar {
+    enabled = false  // 기본 jar는 안 만듦
 }
 
-jar {
-    enabled = true
+shadowJar {
+    archiveBaseName.set('snailcatch-sdk-fat')
+    archiveVersion.set(version)
+    archiveClassifier.set('')  // classifier 없애서 기본 jar 처럼 만들기
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'snailcatch-sdk'
+            artifact(tasks.shadowJar)  // shadowJar를 artifact로 지정
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 tasks.named('test') {
