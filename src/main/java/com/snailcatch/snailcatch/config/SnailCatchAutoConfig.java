@@ -5,8 +5,12 @@ import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollectorHolder
 import com.snailcatch.snailcatch.domain.query_log.collector.impl.ThreadLocalQueryCollector;
 import com.snailcatch.snailcatch.domain.query_log.repository.InMemoryQueryExecutionLogRepository;
 import com.snailcatch.snailcatch.global.aop.SnailCatchInterceptor;
+import com.snailcatch.snailcatch.global.formatter.CustomP6SpyFormatter;
 import com.snailcatch.snailcatch.global.formatter.ExecutionPlanFormatter;
+import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -43,6 +47,8 @@ import javax.sql.DataSource;
 @ConditionalOnProperty(prefix = "snail-catch", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SnailCatchAutoConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
+
     private final SnailCatchProperties properties;
 
     /**
@@ -67,7 +73,9 @@ public class SnailCatchAutoConfig {
     @Bean
     public QueryCollector slowQueryCollector() {
         ThreadLocalQueryCollector collector = new ThreadLocalQueryCollector();
+        log.info("Before setCollector: " + QueryCollectorHolder.getCollector());
         QueryCollectorHolder.setCollector(collector);
+        log.info("After setCollector: " + QueryCollectorHolder.getCollector());
         return collector;
     }
 

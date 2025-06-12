@@ -4,14 +4,14 @@ plugins {
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
 }
+
+// 버전 푸쉬
+// ./gradlew publish
 //git tag 0.2.0
 //git push origin 0.2.0
 
-
-// ./gradlew publish
-
 group = 'com.snailcatch'
-version = '0.2.5'
+version = '0.2.8'
 
 java {
     toolchain {

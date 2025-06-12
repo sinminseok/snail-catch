@@ -2,6 +2,9 @@ package com.snailcatch.snailcatch.global.formatter;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollectorHolder;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Custom formatter for P6Spy that intercepts SQL queries executed by the application.
@@ -9,6 +12,8 @@ import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollectorHolder
  * It captures non-empty SQL statements and adds them to the QueryCollector for later processing or logging.
  */
 public class CustomP6SpyFormatter implements MessageFormattingStrategy {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
 
     /**
      * Formats the SQL message intercepted by P6Spy.
@@ -25,6 +30,9 @@ public class CustomP6SpyFormatter implements MessageFormattingStrategy {
      */
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
+        log.info("Collector instance: " + QueryCollectorHolder.getCollector());
+
+        log.info("sql ====" + sql);
         if (sql != null && !sql.trim().isEmpty()) {
             QueryCollectorHolder.getCollector().addQuery(sql);
         }

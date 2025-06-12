@@ -86,6 +86,7 @@ public class SnailCatchInterceptor implements MethodInterceptor {
      */
     private void logQueryDetails(MethodInvocation invocation, long duration, List<String> queries) {
         String formattedSqls = formatSqls(queries);
+        log.info("queries ==== " + queries.size());
         String executionPlans = generateExecutionPlans(queries);
         String methodName = getMethodSignature(invocation);
         saveLog(formattedSqls, executionPlans, methodName, duration);

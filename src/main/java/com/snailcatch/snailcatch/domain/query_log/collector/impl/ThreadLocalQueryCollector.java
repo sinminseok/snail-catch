@@ -1,6 +1,10 @@
 package com.snailcatch.snailcatch.domain.query_log.collector.impl;
 
 import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollector;
+import com.snailcatch.snailcatch.global.formatter.CustomP6SpyFormatter;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,8 @@ import java.util.List;
  * ensuring thread safety and preventing cross-thread data contamination.</p>
  */
 public class ThreadLocalQueryCollector implements QueryCollector {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
 
     /**
      * ThreadLocal container holding a list of SQL queries per thread.
@@ -26,6 +32,7 @@ public class ThreadLocalQueryCollector implements QueryCollector {
      */
     @Override
     public void addQuery(String query) {
+        log.info("add query==" + query);
         queryCollector.get().add(query);
     }
 
