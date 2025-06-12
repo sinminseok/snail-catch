@@ -1,14 +1,14 @@
 package com.snailcatch.snailcatch.config;
 
 import com.p6spy.engine.spy.P6SpyDriver;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
@@ -31,50 +31,28 @@ import javax.sql.DataSource;
  * </p>
  */
 @Configuration
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 @ConditionalOnClass(P6SpyDriver.class)
+@ConditionalOnBean(DataSource.class)
 @ConditionalOnProperty(prefix = "snail-catch.p6spy", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class P6SpyAutoConfig {
 
-    /**
-     * Creates a {@link DataSource} using the P6Spy driver, if one is not already defined.
-     *
-     * @param properties injected {@link DataSourceProperties} from Spring Boot
-     * @return a P6Spy-wrapped {@link DataSource}
-     */
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public DataSource dataSource(DataSourceProperties properties) {
-//        return DataSourceBuilder.create()
-//                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
-//                .url(replaceWithP6SpyUrl(properties.getUrl()))
-//                .username(properties.getUsername())
-//                .password(properties.getPassword())
-//                .build();
-//    }
     @Bean
-    @ConditionalOnMissingBean
-    public DataSource dataSource(DataSourceProperties properties) {
-        System.out.println("CALL DATA SOURCE");
-        System.out.println(properties.getUrl());
-        System.out.println(properties.getUsername());
-        System.out.println(properties.getPassword());
-        return DataSourceBuilder.create()
-                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
-                .url(properties.getUrl().replace("jdbc:mysql", "jdbc:p6spy:mysql"))
-                .username(properties.getUsername())
-                .password(properties.getPassword())
-                .build();
-    }
+    @Primary
+    public DataSource p6spyDataSource(DataSource originalDataSource, DataSourceProperties properties) {
+        String url = properties.getUrl();
+        if (url != null && url.startsWith("jdbc:mysql:")) {
+            String p6spyUrl = url.replace("jdbc:mysql:", "jdbc:p6spy:mysql:");
+            System.out.println("[SnailCatch] Converting jdbc:mysql → jdbc:p6spy:mysql: " + p6spyUrl);
+            return DataSourceBuilder.create()
+                    .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
+                    .url(p6spyUrl)
+                    .username(properties.getUsername())
+                    .password(properties.getPassword())
+                    .build();
+        }
 
-    /**
-     * Replaces the JDBC URL to use P6Spy instead of default MySQL driver.
-     * For example: jdbc:mysql://... → jdbc:p6spy:mysql://...
-     *
-     * @param originalUrl the original JDBC URL
-     * @return the transformed JDBC URL compatible with P6Spy
-     */
-//    private String replaceWithP6SpyUrl(String originalUrl) {
-//        if (originalUrl == null) return null;
-//        return originalUrl.replace("jdbc:mysql", "jdbc:p6spy:mysql");
-//    }
+        System.out.println("[SnailCatch] Skipping P6Spy wrapping – URL: " + url);
+        return originalDataSource; // fallback to original if not mysql or already wrapped
+    }
 }

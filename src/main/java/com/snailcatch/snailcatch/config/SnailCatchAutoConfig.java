@@ -71,9 +71,7 @@ public class SnailCatchAutoConfig {
     @Bean
     public QueryCollector slowQueryCollector() {
         ThreadLocalQueryCollector collector = new ThreadLocalQueryCollector();
-        System.out.println("Before setCollector: " + QueryCollectorHolder.getCollector());
         QueryCollectorHolder.setCollector(collector);
-        System.out.println("After setCollector: " + QueryCollectorHolder.getCollector());
         return collector;
     }
 

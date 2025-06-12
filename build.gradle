@@ -7,11 +7,11 @@ plugins {
 
 // 버전 푸쉬
 // ./gradlew publish
-// git tag 0.3.6
-// git push origin 0.3.4
+// git tag 0.4.0
+// git push origin 0.4.0
 
 group = 'com.snailcatch'
-version = '0.4.0'
+version = '0.4.1'
 
 java {
     toolchain {
