@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class ThreadLocalQueryCollector implements QueryCollector {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
-
     /**
      * ThreadLocal container holding a list of SQL queries per thread.
      * Initialized with an empty ArrayList for each thread.
@@ -32,7 +30,7 @@ public class ThreadLocalQueryCollector implements QueryCollector {
      */
     @Override
     public void addQuery(String query) {
-        log.info("add query==" + query);
+        System.out.println("add query==" + query);
         queryCollector.get().add(query);
     }
 

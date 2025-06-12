@@ -47,8 +47,6 @@ import javax.sql.DataSource;
 @ConditionalOnProperty(prefix = "snail-catch", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SnailCatchAutoConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
-
     private final SnailCatchProperties properties;
 
     /**
@@ -73,9 +71,9 @@ public class SnailCatchAutoConfig {
     @Bean
     public QueryCollector slowQueryCollector() {
         ThreadLocalQueryCollector collector = new ThreadLocalQueryCollector();
-        log.info("Before setCollector: " + QueryCollectorHolder.getCollector());
+        System.out.println("Before setCollector: " + QueryCollectorHolder.getCollector());
         QueryCollectorHolder.setCollector(collector);
-        log.info("After setCollector: " + QueryCollectorHolder.getCollector());
+        System.out.println("After setCollector: " + QueryCollectorHolder.getCollector());
         return collector;
     }
 

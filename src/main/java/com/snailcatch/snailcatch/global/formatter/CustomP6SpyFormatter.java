@@ -12,9 +12,6 @@ import org.slf4j.LoggerFactory;
  * It captures non-empty SQL statements and adds them to the QueryCollector for later processing or logging.
  */
 public class CustomP6SpyFormatter implements MessageFormattingStrategy {
-
-    private static final Logger log = LoggerFactory.getLogger(CustomP6SpyFormatter.class);
-
     /**
      * Formats the SQL message intercepted by P6Spy.
      * If the SQL is not null or empty, it adds the query to the global QueryCollector.
@@ -30,9 +27,9 @@ public class CustomP6SpyFormatter implements MessageFormattingStrategy {
      */
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        log.info("Collector instance: " + QueryCollectorHolder.getCollector());
+        System.out.println("Collector instance: " + QueryCollectorHolder.getCollector());
 
-        log.info("sql ====" + sql);
+        System.out.println("sql ====" + sql);
         if (sql != null && !sql.trim().isEmpty()) {
             QueryCollectorHolder.getCollector().addQuery(sql);
         }
