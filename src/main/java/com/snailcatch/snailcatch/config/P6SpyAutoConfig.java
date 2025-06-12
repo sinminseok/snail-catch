@@ -41,12 +41,26 @@ public class P6SpyAutoConfig {
      * @param properties injected {@link DataSourceProperties} from Spring Boot
      * @return a P6Spy-wrapped {@link DataSource}
      */
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public DataSource dataSource(DataSourceProperties properties) {
+//        return DataSourceBuilder.create()
+//                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
+//                .url(replaceWithP6SpyUrl(properties.getUrl()))
+//                .username(properties.getUsername())
+//                .password(properties.getPassword())
+//                .build();
+//    }
     @Bean
     @ConditionalOnMissingBean
     public DataSource dataSource(DataSourceProperties properties) {
+        System.out.println("CALL DATA SOURCE");
+        System.out.println(properties.getUrl());
+        System.out.println(properties.getUsername());
+        System.out.println(properties.getPassword());
         return DataSourceBuilder.create()
                 .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
-                .url(replaceWithP6SpyUrl(properties.getUrl()))
+                .url(properties.getUrl().replace("jdbc:mysql", "jdbc:p6spy:mysql"))
                 .username(properties.getUsername())
                 .password(properties.getPassword())
                 .build();
@@ -59,8 +73,8 @@ public class P6SpyAutoConfig {
      * @param originalUrl the original JDBC URL
      * @return the transformed JDBC URL compatible with P6Spy
      */
-    private String replaceWithP6SpyUrl(String originalUrl) {
-        if (originalUrl == null) return null;
-        return originalUrl.replace("jdbc:mysql", "jdbc:p6spy:mysql");
-    }
+//    private String replaceWithP6SpyUrl(String originalUrl) {
+//        if (originalUrl == null) return null;
+//        return originalUrl.replace("jdbc:mysql", "jdbc:p6spy:mysql");
+//    }
 }

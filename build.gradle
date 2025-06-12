@@ -11,7 +11,7 @@ plugins {
 // git push origin 0.3.0
 
 group = 'com.snailcatch'
-version = '0.3.2'
+version = '0.3.3'
 
 java {
     toolchain {

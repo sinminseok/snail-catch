@@ -25,7 +25,7 @@ public class LogFormatter {
      * @return A formatted multiline log string.
      */
     public static String formatLog(String methodName, long duration, String formattedSqls, String explains) {
-        return String.format("\n==================== Snail Catch Log ====================\n" +
+        return String.format("\n==================== Snail Catch ====================\n" +
                         "Method         : %s\n" +
                         "Execution Time : %d ms\n" +
                         "SQL Queries:\n%s\n\n" +
