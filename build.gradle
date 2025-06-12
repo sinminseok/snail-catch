@@ -7,11 +7,11 @@ plugins {
 
 // 버전 푸쉬
 // ./gradlew publish
-// git tag 0.2.8
-// git push origin 0.2.0
+// git tag 0.2.9
+// git push origin 0.2.9
 
 group = 'com.snailcatch'
-version = '0.2.9'
+version = '0.3.0'
 
 java {
     toolchain {
@@ -51,7 +51,7 @@ publishing {
 }
 
 dependencies {
-    api 'p6spy:p6spy:3.9.1'
+    implementation 'p6spy:p6spy:3.9.1'
     implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

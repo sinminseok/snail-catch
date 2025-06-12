@@ -32,7 +32,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ConditionalOnClass(P6SpyDriver.class)
-@ConditionalOnExpression("${snailcatch.p6spy.enabled:true} and ${snail-catch.enabled:true}")
+@ConditionalOnExpression("${snail-catch.enabled:true}")
 public class P6SpyAutoConfig {
 
     /**
