@@ -1,17 +1,17 @@
 // 버전 푸쉬
-// ./gradlew clean shadowJar
-// git tag 0.4.3
-// git push origin 0.4.3
+// ./gradlew clean shadowJar publish
+// git tag 0.4.7
+// git push origin 0.4.7
 
 plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'  // Shadow plugin 추가
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'java-library'  // 라이브러리용
+    id 'maven-publish' // Maven에 배포
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // fat jar
+    id 'io.spring.dependency-management' version '1.1.7' // spring 의존성 버전 관리
 }
 
 group = 'com.snailcatch'
-version = '0.4.4'
+version = '0.5.0'
 
 java {
     toolchain {
@@ -24,36 +24,46 @@ repositories {
 }
 
 dependencies {
-    api 'p6spy:p6spy:3.9.1'
-    implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
+    // Spring Boot BOM 명시 적용
+    implementation(enforcedPlatform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
+
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework:spring-aop'
-    implementation 'org.hibernate:hibernate-core:5.6.10.Final'
     implementation 'org.springframework:spring-context'
-    implementation 'org.projectlombok:lombok:1.18.20'
     implementation 'org.springframework:spring-web'
+
+    // 기타 라이브러리
+    api 'p6spy:p6spy:3.9.1'
+    implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 jar {
-    enabled = false  // 기본 jar는 안 만듦
+    enabled = false // 기본 JAR 비활성화
 }
 
 shadowJar {
     archiveBaseName.set('snailcatch-sdk-fat')
     archiveVersion.set(version)
-    archiveClassifier.set('')  // classifier 없애서 기본 jar 처럼 만들기
+    archiveClassifier.set('') // classifier 없애서 -all 같은 접미사 제거
+    mergeServiceFiles() // ServiceLoader 병합 (필요한 경우)
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'snailcatch-sdk'
-            artifact(tasks.shadowJar)  // shadowJar를 artifact로 지정
+            artifact(tasks.shadowJar) // shadowJar 를 artifact로 지정
         }
     }
     repositories {
