@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'maven-publish'
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
@@ -7,11 +7,11 @@ plugins {
 
 // 버전 푸쉬
 // ./gradlew publish
-//git tag 0.2.0
-//git push origin 0.2.0
+// git tag 0.2.8
+// git push origin 0.2.0
 
 group = 'com.snailcatch'
-version = '0.2.8'
+version = '0.2.9'
 
 java {
     toolchain {
@@ -51,7 +51,7 @@ publishing {
 }
 
 dependencies {
-    implementation 'p6spy:p6spy:3.9.1'
+    api 'p6spy:p6spy:3.9.1'
     implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -73,7 +73,6 @@ bootJar {
 jar {
     enabled = true
 }
-
 
 tasks.named('test') {
     useJUnitPlatform()
