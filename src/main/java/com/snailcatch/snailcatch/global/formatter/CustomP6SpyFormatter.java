@@ -2,9 +2,7 @@ package com.snailcatch.snailcatch.global.formatter;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollectorHolder;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * Custom formatter for P6Spy that intercepts SQL queries executed by the application.
@@ -27,11 +25,13 @@ public class CustomP6SpyFormatter implements MessageFormattingStrategy {
      */
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        System.out.println("Collector instance: " + QueryCollectorHolder.getCollector());
-
-        System.out.println("sql ====" + sql);
-        if (sql != null && !sql.trim().isEmpty()) {
-            QueryCollectorHolder.getCollector().addQuery(sql);
+        try {
+            System.out.println("🔥🔥🔥 P6Spy formatMessage 호출됨!");
+            if (sql != null && !sql.trim().isEmpty()) {
+                QueryCollectorHolder.getCollector().addQuery(sql);
+            }
+        } catch (Exception e) {
+            System.out.println("🔥🔥🔥 예외 발생: " + e.getMessage());
         }
         return sql;
     }
