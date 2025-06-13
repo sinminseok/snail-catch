@@ -1,7 +1,7 @@
 // 버전 푸쉬
 // ./gradlew clean shadowJar publish
-// git tag 0.5.2
-// git push origin 0.5.2
+// git tag 0.7.0
+// git push origin 0.7.0
 
 plugins {
     id 'java-library'
@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '0.5.2'
+version = '0.7.0'
 
 java {
     toolchain {
