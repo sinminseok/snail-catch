@@ -1,13 +1,13 @@
 // 버전 푸쉬
 // ./gradlew clean shadowJar publish
-// git tag 0.5.1
-// git push origin 0.5.1
+// git tag 0.5.2
+// git push origin 0.5.2
 
 plugins {
-    id 'java-library'  // 라이브러리용
-    id 'maven-publish' // Maven에 배포
-    id 'com.github.johnrengelman.shadow' version '8.1.1' // fat jar
-    id 'io.spring.dependency-management' version '1.1.7' // spring 의존성 버전 관리
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.snailcatch'
@@ -49,21 +49,21 @@ dependencies {
 }
 
 jar {
-    enabled = false // 기본 JAR 비활성화
+    enabled = false
 }
 
 shadowJar {
     archiveBaseName.set('snailcatch-sdk-fat')
     archiveVersion.set(version)
-    archiveClassifier.set('') // classifier 없애서 -all 같은 접미사 제거
-    mergeServiceFiles() // ServiceLoader 병합 (필요한 경우)
+    archiveClassifier.set('')
+    mergeServiceFiles()
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'snailcatch-sdk'
-            artifact(tasks.shadowJar) // shadowJar 를 artifact로 지정
+            artifact(tasks.shadowJar)
         }
     }
     repositories {

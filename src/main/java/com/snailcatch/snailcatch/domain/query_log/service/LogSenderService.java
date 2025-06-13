@@ -24,7 +24,7 @@ import java.util.List;
 public class LogSenderService implements LogSender {
 
     /** The endpoint to which query logs are posted */
-    private static final String SENDER_PATH = "http://3.39.232.66/api/query-logs";
+    private static final String SENDER_PATH = "http://15.165.96.198/api/query-logs";
 
     /** Spring's HTTP client for sending log data */
     private final RestTemplate restTemplate;
