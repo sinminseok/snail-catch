@@ -1,12 +1,13 @@
 # 🐌 Snail Catch SDK Service
 
+
 SnailCatch SQL Formatter SDK is a Java-based SQL log formatter that transforms complex and hard-to-read 
 SQL statements and execution plans (EXPLAIN results) into a human-readable format.
 
 
----
+## Who is this SDK useful for?
 
-##Who is this SDK useful for?  
+----
 
 - Developers who frequently debug queries or want to organize and review SQL logs
 
@@ -14,6 +15,12 @@ SQL statements and execution plans (EXPLAIN results) into a human-readable forma
 
 - Teams building or integrating internal SQL analysis tools or APM systems
 
+## Features provided
+
+--- 
+Displays the bound SQL queries and execution plans in the console.
+
+Provides a web page to view the collected query logs.
 
 ## Console Output Example
 
@@ -43,6 +50,9 @@ Execution Plans:
 
 ----
 
+Currently, only queries using MySQL are supported for detection. 
+We will update the version in the future to support other databases as well.
+
 **1. Get a REST API Key**  
 
   Visit http://15.165.96.198/settings/api-key to generate your REST API key.
@@ -61,6 +71,8 @@ dependencies {
     implementation 'com.github.sinminseok:snail-catch:1.0.0'
 }
 ```
+
+You must use version 1.0.0 or higher of `com.github.sinminseok:snail-catch.`
 
 **3. Configure application.yml**  
 
@@ -116,7 +128,7 @@ Click on any query to see detailed information and its execution plan.
 | `org.springframework:spring-aop`, `spring-context`, `spring-web` | Core Spring framework libraries                               |
 | `lombok:1.18.30`                                                 | Lombok is required at **compile time** (annotation processor) |
 
-##Important Notes for SDK Consumers
+## Important Notes for SDK Consumers
 
 ---
 
