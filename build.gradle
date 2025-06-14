@@ -1,7 +1,7 @@
 // 버전 푸쉬
 // ./gradlew clean shadowJar publish
-// git tag 0.7.0
-// git push origin 0.7.0
+// git tag 1.0.0
+// git push origin 1.0.0
 
 plugins {
     id 'java-library'
@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '0.7.0'
+version = '1.0.0'
 
 java {
     toolchain {
@@ -24,7 +24,6 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot BOM 명시 적용
     implementation(enforcedPlatform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -35,15 +34,12 @@ dependencies {
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework:spring-web'
 
-    // 기타 라이브러리
     api 'p6spy:p6spy:3.9.1'
     implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
 
-    // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

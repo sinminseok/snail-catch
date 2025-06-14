@@ -1,10 +1,6 @@
 package com.snailcatch.snailcatch.domain.query_log.collector.impl;
 
 import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollector;
-import com.snailcatch.snailcatch.global.formatter.CustomP6SpyFormatter;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,6 @@ public class ThreadLocalQueryCollector implements QueryCollector {
      */
     @Override
     public void addQuery(String query) {
-        System.out.println("add query==" + query);
         queryCollector.get().add(query);
     }
 

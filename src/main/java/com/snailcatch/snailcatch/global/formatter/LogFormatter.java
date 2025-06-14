@@ -18,10 +18,10 @@ public class LogFormatter {
     /**
      * Formats a log message with method name, execution time, SQL queries, and execution plans.
      *
-     * @param methodName   The name of the method where the query was executed.
-     * @param duration     The execution duration in milliseconds.
+     * @param methodName    The name of the method where the query was executed.
+     * @param duration      The execution duration in milliseconds.
      * @param formattedSqls The formatted SQL query string(s).
-     * @param explains     The formatted execution plan string(s).
+     * @param explains      The formatted execution plan string(s).
      * @return A formatted multiline log string.
      */
     public static String formatLog(String methodName, long duration, String formattedSqls, String explains) {

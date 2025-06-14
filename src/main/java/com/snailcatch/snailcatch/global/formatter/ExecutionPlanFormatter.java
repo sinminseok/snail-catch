@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * A formatter class that generates and formats SQL execution plans using the EXPLAIN statement.
- *
+ * <p>
  * It connects to the database via the provided DataSource,
  * executes EXPLAIN on a given SQL query, and returns the result in structured formats.
  */
@@ -25,7 +25,7 @@ public class ExecutionPlanFormatter {
      * of the execution plan.
      *
      * @param dataSource the DataSource to obtain a DB connection
-     * @param sql the SQL query to explain
+     * @param sql        the SQL query to explain
      * @return formatted string of the execution plan or error message if an exception occurs
      */
     public String explainQuery(DataSource dataSource, String sql) {

@@ -24,22 +24,34 @@ import java.util.List;
 @Component
 public class BufferedLogDispatchService {
 
-    /** Repository used for buffering QueryLogs in memory */
+    /**
+     * Repository used for buffering QueryLogs in memory
+     */
     private final QueryLogRepository repository;
 
-    /** Sender component responsible for dispatching logs to an external destination */
+    /**
+     * Sender component responsible for dispatching logs to an external destination
+     */
     private final LogSender logSender;
 
-    /** Maximum number of logs to buffer before triggering a flush */
+    /**
+     * Maximum number of logs to buffer before triggering a flush
+     */
     private final int MAX_BUFFER_SIZE = 100;
 
-    /** Maximum time to wait before flushing the buffer, even if it's not full */
+    /**
+     * Maximum time to wait before flushing the buffer, even if it's not full
+     */
     private final Duration MAX_WAIT_TIME = Duration.ofSeconds(10);
 
-    /** Interval at which to check whether the buffer should be flushed */
+    /**
+     * Interval at which to check whether the buffer should be flushed
+     */
     private final Duration CHECK_INTERVAL = Duration.ofSeconds(5);
 
-    /** Timestamp of the last buffer flush */
+    /**
+     * Timestamp of the last buffer flush
+     */
     private Instant lastFlushTime = Instant.now();
 
     /**

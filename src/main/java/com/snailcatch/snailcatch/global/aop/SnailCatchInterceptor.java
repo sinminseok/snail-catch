@@ -37,10 +37,10 @@ public class SnailCatchInterceptor implements MethodInterceptor {
     /**
      * Constructor to initialize necessary components for query interception and logging.
      *
-     * @param queryCollector collects SQL queries executed during method invocation
+     * @param queryCollector      collects SQL queries executed during method invocation
      * @param executionPlanLogger generates execution plans for SQL queries
-     * @param dataSource database connection source used for explaining queries
-     * @param queryLogRepository repository to save query logs
+     * @param dataSource          database connection source used for explaining queries
+     * @param queryLogRepository  repository to save query logs
      */
     public SnailCatchInterceptor(QueryCollector queryCollector, ExecutionPlanFormatter executionPlanLogger, DataSource dataSource, QueryLogRepository queryLogRepository) {
         this.queryCollector = queryCollector;
@@ -81,8 +81,8 @@ public class SnailCatchInterceptor implements MethodInterceptor {
      * including formatted SQL queries, execution plans, method signature, and duration.
      *
      * @param invocation the method invocation
-     * @param duration execution time in milliseconds
-     * @param queries list of collected SQL queries
+     * @param duration   execution time in milliseconds
+     * @param queries    list of collected SQL queries
      */
     private void logQueryDetails(MethodInvocation invocation, long duration, List<String> queries) {
         String formattedSqls = formatSqls(queries);
@@ -96,12 +96,12 @@ public class SnailCatchInterceptor implements MethodInterceptor {
     /**
      * Saves the query log to the repository.
      *
-     * @param sql formatted SQL queries
+     * @param sql           formatted SQL queries
      * @param executionPlan generated execution plan string
-     * @param methodName method signature where queries were executed
-     * @param duration execution time in milliseconds
+     * @param methodName    method signature where queries were executed
+     * @param duration      execution time in milliseconds
      */
-    private void saveLog(String sql, String executionPlan, String methodName, long duration){
+    private void saveLog(String sql, String executionPlan, String methodName, long duration) {
         QueryLog queryExecutionLog = QueryLog.of(methodName, sql, executionPlan, duration);
         queryLogRepository.save(queryExecutionLog);
     }

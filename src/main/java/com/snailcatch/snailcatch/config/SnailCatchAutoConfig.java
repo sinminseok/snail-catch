@@ -5,12 +5,8 @@ import com.snailcatch.snailcatch.domain.query_log.collector.QueryCollectorHolder
 import com.snailcatch.snailcatch.domain.query_log.collector.impl.ThreadLocalQueryCollector;
 import com.snailcatch.snailcatch.domain.query_log.repository.InMemoryQueryExecutionLogRepository;
 import com.snailcatch.snailcatch.global.aop.SnailCatchInterceptor;
-import com.snailcatch.snailcatch.global.formatter.CustomP6SpyFormatter;
 import com.snailcatch.snailcatch.global.formatter.ExecutionPlanFormatter;
-import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -85,10 +81,10 @@ public class SnailCatchAutoConfig {
      * and InMemoryQueryExecutionLogRepository to perform its functions.
      * </p>
      *
-     * @param dataSource the DataSource used for database connections
-     * @param queryCollector the QueryCollector bean for collecting query logs
+     * @param dataSource             the DataSource used for database connections
+     * @param queryCollector         the QueryCollector bean for collecting query logs
      * @param executionPlanFormatter the formatter for database execution plans
-     * @param logRepository in-memory repository for storing query execution logs
+     * @param logRepository          in-memory repository for storing query execution logs
      * @return an Advisor configured with SnailCatchInterceptor and the appropriate pointcut
      */
     @Bean

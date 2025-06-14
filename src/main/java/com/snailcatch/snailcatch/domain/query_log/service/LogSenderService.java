@@ -23,19 +23,25 @@ import java.util.List;
 @Component
 public class LogSenderService implements LogSender {
 
-    /** The endpoint to which query logs are posted */
+    /**
+     * The endpoint to which query logs are posted
+     */
     private static final String SENDER_PATH = "http://15.165.96.198/api/query-logs";
 
-    /** Spring's HTTP client for sending log data */
+    /**
+     * Spring's HTTP client for sending log data
+     */
     private final RestTemplate restTemplate;
 
-    /** Application-specific configuration that contains the API key */
+    /**
+     * Application-specific configuration that contains the API key
+     */
     private final SnailCatchProperties repositoryProperties;
 
     /**
      * Constructs a new LogSenderService.
      *
-     * @param builder               used to build a {@link RestTemplate} instance
+     * @param builder              used to build a {@link RestTemplate} instance
      * @param repositoryProperties configuration that includes the API key
      */
     public LogSenderService(RestTemplateBuilder builder, SnailCatchProperties repositoryProperties) {

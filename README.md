@@ -1,26 +1,21 @@
-# 🐌 Snail Catch SQL Formatter SDK
+# 🐌 Snail Catch SDK Service
 
-`SnailCatch SQL Formatter SDK`는 Java 기반의 SQL 로그 포맷터로, 복잡하고 가독성이 낮은 SQL 문과 실행 계획(EXPLAIN 결과)을 사람이 읽기 좋은 형식으로 변환해주는 유틸리티 SDK입니다.
-
+SnailCatch SQL Formatter SDK is a Java-based SQL log formatter that transforms complex and hard-to-read 
+SQL statements and execution plans (EXPLAIN results) into a human-readable format.
 
 
 ---
 
-##  제공 기능
+##Who is this SDK useful for?  
 
-1. 바인딩된 SQL 쿼리 콘솔로그에 자동 출력 
-2. 수집된 쿼리 로그를 확인하는 View 제공  
+- Developers who frequently debug queries or want to organize and review SQL logs
 
----
+- Developers who want to log and analyze EXPLAIN results to improve service performance
 
-## 이 SDK는 어떤 개발자에게 유용한가요?
-
-- 쿼리 디버깅을 자주 하거나, SQL 로그를 정리해서 보고 싶은 **백엔드 개발자**
-- 서비스 성능 개선을 위해 **EXPLAIN 결과를 로그로 남기고 분석**하고자 하는 개발자
-- 내부 **SQL 분석 도구 혹은 APM 시스템**을 만들거나 연동하려는 팀
+- Teams building or integrating internal SQL analysis tools or APM systems
 
 
-## 콘솔 출력 예시
+## Console Output Example
 
 ----
 
@@ -44,20 +39,102 @@ Execution Plans:
 
 ```
 
-## 사용 방법
+## How to Use
 
 ----
 
-1. build.gradle SDK 라이브러리 추가 
-2. REST API KEY 발급 (http://localhost:8081/settings/api-key) 접속 후 발급 
+**1. Get a REST API Key**  
 
-3. application.yml 설정 방법 (발급한 REST API KEY && JPA,QueryDSL 을 사용하는 포인트컷 추가)
-4. 수집된 쿼리 로그는 (http://localhost:8081/query-logs) 에서 모니터링 가능 
+  Visit http://15.165.96.198/settings/api-key to generate your REST API key.
+
+![API Key View](photo/api-key-view.png)
+
+**2. Add the SnailCatch SDK to your build.gradle file**  
+
+```
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.sinminseok:snail-catch:1.0.0'
+}
+```
+
+**3. Configure application.yml**  
 
 ```
 snail-catch:
-   api-key : {REST API KEY}
-   repository-pointcut: execution(* com.myapp.repository..*(..))
+  enabled: true
+  repository-pointcut: {JPA pointcut expression}  # e.g., execution(* com.myapp.repository..*(..))
+  api-key: {your issued key}
 ```
 
+`enabled` : Enables or disables SnailCatch (default is true)
 
+`repository-pointcut` : Pointcut expression to target repository classes for SQL detection
+
+`api-key` : The REST API key issued in step 1
+
+
+**4. Monitor Collected Query Logs**
+
+
+You can monitor the collected query logs at: http://15.165.96.198/query-logs.  
+Enter your issued API key to view the query logs.  
+Click on any query to see detailed information and its execution plan.  
+
+![API Key View](photo/query-view-1.png)
+
+![API Key View](photo/query-view-2.png)
+
+## Supported Environments & Minimum Requirements
+
+----
+
+| Item                                                                   | Requirement                                                 |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **Java Version**                                                       | **Java 17 or higher required**                              |
+| → Configured via `JavaLanguageVersion.of(17)`                          |                                                             |
+| **Spring Boot Version**                                                | **3.2.5 or higher recommended**                             |
+| → Using BOM: `org.springframework.boot:spring-boot-dependencies:3.2.5` |                                                             |
+| **Gradle Plugins**                                                     | `shadowJar (8.1.1)`, `spring-dependency-management (1.1.7)` |
+| → Ensure compatibility with your environment                           |                                                             |
+
+##  Dependencies
+
+----
+
+| Library                                                          | Description                                                   |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- |
+| `p6spy:p6spy:3.9.1`                                              | Core dependency for JDBC query logging                        |
+| `com.github.vertical-blank:sql-formatter:2.0.3`                  | SQL formatting utility (pretty print)                         |
+| `org.springframework.boot:spring-boot-starter-aop`               | Enables AOP-based SQL trace                                   |
+| `org.springframework.boot:spring-boot-starter-data-jpa`          | JPA repository support                                        |
+| `org.springframework.boot:spring-boot-starter-jdbc`              | JDBC query tracing with P6Spy                                 |
+| `org.springframework:spring-aop`, `spring-context`, `spring-web` | Core Spring framework libraries                               |
+| `lombok:1.18.30`                                                 | Lombok is required at **compile time** (annotation processor) |
+
+##Important Notes for SDK Consumers
+
+---
+
+
+❗ Java 17 or higher is required.
+→ Compilation will fail if you're using Java 11 or below.
+
+❗ Spring Boot 3.2.5 is the baseline
+→ If your project uses a lower Spring Boot version, especially below 3.x, dependency conflicts may occur (notably with spring-aop, spring-context, etc.).
+
+⚠️ Be careful with P6Spy
+→ If you're already using p6spy in your project, avoid duplicate configurations.
+→ P6Spy settings should be configured only once per application.
+
+⚠️ ShadowJar (fat JAR) packaging
+→ The SDK is distributed as a fat JAR.
+→ There is a risk of conflicts with external libraries if your project includes the same dependencies.
+
+⚠️ Lombok must be enabled
+→ Make sure annotationProcessor is properly set up.
+→ Without it, you will get compilation errors.

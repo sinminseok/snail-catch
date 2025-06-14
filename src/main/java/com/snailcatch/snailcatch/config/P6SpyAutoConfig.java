@@ -10,35 +10,35 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 /**
- * Auto-configuration class for enabling P6Spy when it's available on the classpath
- * and explicitly enabled via configuration.
- *
+ * Auto-configuration class for integrating P6Spy into Spring Boot applications.
  * <p>
- * This replaces the default {@link DataSource} with one wrapped by P6Spy
- * to allow SQL query logging.
- * </p>
- *
+ * This configuration will activate only if:
+ * 1. The P6SpyDriver class is present in the classpath.
+ * 2. The property "snail-catch.enabled" is set to true or is missing (defaults to true).
  * <p>
- * Conditions:
- * <ul>
- *     <li>{@link P6SpyDriver} must be present on the classpath</li>
- *     <li>Property <code>snailcatch.p6spy.enabled</code> must be true (default is true)</li>
- *     <li>No other {@link DataSource} bean must be defined</li>
- * </ul>
- * </p>
+ * The main purpose is to wrap the original DataSource with P6Spy's proxy driver
+ * to intercept and log all JDBC queries for easier SQL logging and debugging.
  */
 @Configuration
 @ConditionalOnClass(P6SpyDriver.class)
 @ConditionalOnProperty(prefix = "snail-catch", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class P6SpyAutoConfig {
 
+    /**
+     * Defines a DataSource bean wrapped by P6SpyDriver.
+     * <p>
+     * This replaces the normal JDBC driver class name with "com.p6spy.engine.spy.P6SpyDriver",
+     * and rewrites the JDBC URL to use P6Spy's proxy prefix ("jdbc:p6spy:mysql" instead of "jdbc:mysql").
+     *
+     * @param properties the original DataSourceProperties (configured via application.yml/properties)
+     * @return a DataSource wrapped with P6Spy for query logging
+     */
     @Bean
     @ConditionalOnMissingBean
     public DataSource dataSource(DataSourceProperties properties) {
-        System.out.println("test start datasource");
         return DataSourceBuilder.create()
-                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")
-                .url(properties.getUrl().replace("jdbc:mysql", "jdbc:p6spy:mysql"))
+                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")  // Use P6Spy driver to intercept SQL
+                .url(properties.getUrl().replace("jdbc:mysql", "jdbc:p6spy:mysql"))  // Wrap original JDBC URL
                 .username(properties.getUsername())
                 .password(properties.getPassword())
                 .build();

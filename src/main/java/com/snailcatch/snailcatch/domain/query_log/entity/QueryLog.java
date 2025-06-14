@@ -27,10 +27,10 @@ public class QueryLog implements Comparable<QueryLog>, Serializable {
     /**
      * Private constructor. Use {@link #of(String, String, String, long)} to create instances.
      *
-     * @param methodName     The name of the method where the query was executed.
-     * @param sqlQuery       The raw SQL query string.
-     * @param executionPlan  The execution plan of the SQL query.
-     * @param duration       The time it took to execute the query, in milliseconds.
+     * @param methodName    The name of the method where the query was executed.
+     * @param sqlQuery      The raw SQL query string.
+     * @param executionPlan The execution plan of the SQL query.
+     * @param duration      The time it took to execute the query, in milliseconds.
      */
     private QueryLog(String methodName, String sqlQuery, String executionPlan, long duration) {
         this.methodName = methodName;
@@ -43,10 +43,10 @@ public class QueryLog implements Comparable<QueryLog>, Serializable {
     /**
      * Static factory method to create a new {@link QueryLog} instance.
      *
-     * @param methodName     The name of the method where the query was executed.
-     * @param sqlQuery       The raw SQL query string.
-     * @param executionPlan  The execution plan of the SQL query.
-     * @param duration       The time it took to execute the query, in milliseconds.
+     * @param methodName    The name of the method where the query was executed.
+     * @param sqlQuery      The raw SQL query string.
+     * @param executionPlan The execution plan of the SQL query.
+     * @param duration      The time it took to execute the query, in milliseconds.
      * @return A new immutable {@link QueryLog} instance.
      */
     public static QueryLog of(String methodName, String sqlQuery, String executionPlan, long duration) {
