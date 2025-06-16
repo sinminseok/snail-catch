@@ -7,17 +7,22 @@ import static com.snailcatch.snailcatch.global.constants.LogMessageTemplates.*;
 import static com.snailcatch.snailcatch.global.constants.SqlConstants.*;
 
 /**
- * Utility class for formatting SQL logs and execution plans for better readability.
+ * Utility class for formatting SQL execution logs and EXPLAIN query results.
+ *
+ * <p>This class provides methods to format detailed log messages and neatly
+ * formatted execution plans, aligning columns and producing console-friendly output.</p>
  */
 public class LogFormatter {
+
     /**
-     * Formats a log message with method name, execution time, SQL queries, and execution plans.
+     * Formats a comprehensive log message including method name, execution time,
+     * SQL queries, and their execution plans.
      *
-     * @param methodName    The name of the method where the query was executed.
-     * @param duration      The execution duration in milliseconds.
-     * @param formattedSqls The formatted SQL query string(s).
-     * @param explains      The formatted execution plan string(s).
-     * @return A formatted multiline log string.
+     * @param methodName   the name of the method executing the SQL queries
+     * @param duration     execution duration in milliseconds
+     * @param formattedSqls formatted SQL query string(s)
+     * @param explains     formatted EXPLAIN plan string(s)
+     * @return formatted log message ready for console output
      */
     public static String formatLog(String methodName, long duration, String formattedSqls, String explains) {
         return String.format(SNAIL_CATCH_CONSOLE_FORM,
@@ -25,10 +30,10 @@ public class LogFormatter {
     }
 
     /**
-     * Formats the result of an EXPLAIN query into a nicely aligned table string.
+     * Formats the EXPLAIN query result rows into a well-aligned table-like string.
      *
-     * @param rowsData List of rows, each row represented as a map of column name to value.
-     * @return A string representing the formatted execution plan table.
+     * @param rowsData list of maps, each representing a row of EXPLAIN output with column name as key
+     * @return formatted multi-line string representing the EXPLAIN output
      */
     public static String formatExplain(List<Map<String, String>> rowsData) {
         Map<String, Integer> columnWidths = calculateColumnWidths(rowsData);
@@ -43,6 +48,12 @@ public class LogFormatter {
         return sb.toString();
     }
 
+    /**
+     * Calculates the maximum width needed for each EXPLAIN column to properly align the output.
+     *
+     * @param rowsData the EXPLAIN query result rows
+     * @return map of column names to their respective max widths
+     */
     private static Map<String, Integer> calculateColumnWidths(List<Map<String, String>> rowsData) {
         Map<String, Integer> columnWidths = new LinkedHashMap<>();
         for (String col : EXPLAIN_COLUMNS) {
@@ -57,6 +68,12 @@ public class LogFormatter {
         return columnWidths;
     }
 
+    /**
+     * Formats the header row of the EXPLAIN output table.
+     *
+     * @param columnWidths map of column widths for alignment
+     * @return formatted header string
+     */
     private static String formatHeader(Map<String, Integer> columnWidths) {
         StringBuilder sb = new StringBuilder();
         sb.append(PIPE_WITH_SPACE);
@@ -67,6 +84,12 @@ public class LogFormatter {
         return sb.toString();
     }
 
+    /**
+     * Formats the separator row composed of dashes to visually separate the header and data rows.
+     *
+     * @param columnWidths map of column widths for alignment
+     * @return formatted separator string
+     */
     private static String formatSeparator(Map<String, Integer> columnWidths) {
         StringBuilder sb = new StringBuilder();
         sb.append(PIPE);
@@ -77,6 +100,13 @@ public class LogFormatter {
         return sb.toString();
     }
 
+    /**
+     * Formats a single data row from the EXPLAIN query results.
+     *
+     * @param row          map representing a single EXPLAIN row with column names as keys
+     * @param columnWidths map of column widths for alignment
+     * @return formatted row string
+     */
     private static String formatRow(Map<String, String> row, Map<String, Integer> columnWidths) {
         StringBuilder sb = new StringBuilder();
         sb.append(PIPE_WITH_SPACE);
