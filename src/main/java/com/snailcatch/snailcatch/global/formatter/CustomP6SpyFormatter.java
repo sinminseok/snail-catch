@@ -29,7 +29,7 @@ public class CustomP6SpyFormatter implements MessageFormattingStrategy {
                 QueryCollectorHolder.getCollector().addQuery(sql);
             }
         } catch (Exception e) {
-            System.out.println("Error : " + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
         return sql;
     }

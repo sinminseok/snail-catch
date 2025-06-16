@@ -11,6 +11,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.snailcatch.snailcatch.global.constants.FormatConstants.HYPHEN;
+import static com.snailcatch.snailcatch.global.constants.SqlConstants.*;
+
+
 /**
  * A formatter class that generates and formats SQL execution plans using the EXPLAIN statement.
  * <p>
@@ -32,12 +36,12 @@ public class ExecutionPlanFormatter {
         List<Map<String, String>> rowsData = new ArrayList<>();
         try (
                 Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement("EXPLAIN " + sql);
+                PreparedStatement ps = conn.prepareStatement(EXPLAIN + sql);
                 ResultSet rs = ps.executeQuery()
         ) {
             while (rs.next()) {
                 Map<String, String> row = new LinkedHashMap<>();
-                for (String col : LogFormatter.EXPLAIN_COLUMNS) {
+                for (String col : EXPLAIN_COLUMNS) {
                     row.put(col, nullToDash(rs.getString(col)));
                 }
                 rowsData.add(row);
@@ -57,6 +61,6 @@ public class ExecutionPlanFormatter {
      * @return original string if not null/empty, otherwise "-"
      */
     private String nullToDash(String str) {
-        return (str == null || str.isEmpty()) ? "-" : str;
+        return (str == null || str.isEmpty()) ? HYPHEN : str;
     }
 }

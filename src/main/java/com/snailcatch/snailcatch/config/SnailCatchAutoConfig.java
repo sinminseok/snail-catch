@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+import static com.snailcatch.snailcatch.global.constants.AppConstants.*;
+
 /**
  * Auto-configuration class for SnailCatch.
  *
@@ -39,8 +41,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableConfigurationProperties(SnailCatchProperties.class)
-@ComponentScan(basePackages = "com.snailcatch.snailcatch")
-@ConditionalOnProperty(prefix = "snail-catch", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ComponentScan(basePackages = BASE_PACKAGE)
+@ConditionalOnProperty(prefix = PROPERTY_PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SnailCatchAutoConfig {
 
     private final SnailCatchProperties properties;

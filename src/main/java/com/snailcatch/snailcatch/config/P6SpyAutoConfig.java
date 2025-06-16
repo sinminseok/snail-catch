@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+import static com.snailcatch.snailcatch.global.constants.AppConstants.PROPERTY_PREFIX;
+import static com.snailcatch.snailcatch.global.constants.DataSourceConstants.*;
+
 /**
  * Auto-configuration class for integrating P6Spy into Spring Boot applications.
  * <p>
@@ -21,7 +24,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ConditionalOnClass(P6SpyDriver.class)
-@ConditionalOnProperty(prefix = "snail-catch", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = PROPERTY_PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class P6SpyAutoConfig {
 
     /**
@@ -37,8 +40,8 @@ public class P6SpyAutoConfig {
     @ConditionalOnMissingBean
     public DataSource dataSource(DataSourceProperties properties) {
         return DataSourceBuilder.create()
-                .driverClassName("com.p6spy.engine.spy.P6SpyDriver")  // Use P6Spy driver to intercept SQL
-                .url(properties.getUrl().replace("jdbc:mysql", "jdbc:p6spy:mysql"))  // Wrap original JDBC URL
+                .driverClassName(P6SPY_DRIVER_CLASS_NAME)  // Use P6Spy driver to intercept SQL
+                .url(properties.getUrl().replace(MYSQL_JDBC_PREFIX, P6SPY_JDBC_PREFIX))  // Wrap original JDBC URL
                 .username(properties.getUsername())
                 .password(properties.getPassword())
                 .build();

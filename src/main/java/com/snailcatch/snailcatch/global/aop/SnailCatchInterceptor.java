@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.snailcatch.snailcatch.global.constants.FormatConstants.*;
+import static com.snailcatch.snailcatch.global.constants.SqlConstants.*;
+
 /**
  * A MethodInterceptor implementation that intercepts method executions,
  * collects executed SQL queries, measures execution time,
@@ -24,9 +27,6 @@ import java.util.stream.Collectors;
  */
 public class SnailCatchInterceptor implements MethodInterceptor {
 
-    private static final String NEXT_LINE = "\n";
-    private static final String DOT = ".";
-    private static final String SELECT_QUERY_PREFIX = "select";
     private static final Logger log = LoggerFactory.getLogger(SnailCatchInterceptor.class);
 
     private final QueryCollector queryCollector;
@@ -60,19 +60,12 @@ public class SnailCatchInterceptor implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         queryCollector.clear();
-
         long startTime = System.currentTimeMillis();
-
         Object result = invocation.proceed();
-
         long duration = System.currentTimeMillis() - startTime;
-
         List<String> collectedQueries = new ArrayList<>(queryCollector.getQueries());
-
         logQueryDetails(invocation, duration, collectedQueries);
-
         queryCollector.clear();
-
         return result;
     }
 
@@ -86,7 +79,6 @@ public class SnailCatchInterceptor implements MethodInterceptor {
      */
     private void logQueryDetails(MethodInvocation invocation, long duration, List<String> queries) {
         String formattedSqls = formatSqls(queries);
-        log.info("queries ==== " + queries.size());
         String executionPlans = generateExecutionPlans(queries);
         String methodName = getMethodSignature(invocation);
         saveLog(formattedSqls, executionPlans, methodName, duration);
@@ -115,7 +107,7 @@ public class SnailCatchInterceptor implements MethodInterceptor {
     private String formatSqls(List<String> queries) {
         return queries.stream()
                 .map(SqlFormatter::formatSql)
-                .collect(Collectors.joining(NEXT_LINE));
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     /**
@@ -128,7 +120,7 @@ public class SnailCatchInterceptor implements MethodInterceptor {
         return queries.stream()
                 .filter(this::isSelectQuery)
                 .map(query -> executionPlanLogger.explainQuery(dataSource, query))
-                .collect(Collectors.joining(NEXT_LINE));
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     /**

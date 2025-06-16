@@ -2,6 +2,8 @@ package com.snailcatch.snailcatch.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static com.snailcatch.snailcatch.global.constants.AppConstants.PROPERTY_PREFIX;
+
 /**
  * Configuration properties for SnailCatch.
  *
@@ -19,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * </ul>
  * </p>
  */
-@ConfigurationProperties(prefix = "snail-catch")
+@ConfigurationProperties(prefix = PROPERTY_PREFIX)
 public class SnailCatchProperties {
 
     /**
