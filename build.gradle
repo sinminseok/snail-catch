@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '1.0.0'
+version = '1.0.1'
 
 java {
     toolchain {
@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation(enforcedPlatform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
