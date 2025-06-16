@@ -68,11 +68,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.sinminseok:snail-catch:1.0.0'
+    implementation 'com.github.sinminseok:snail-catch:1.1.0'
 }
 ```
 
-You must use version 1.0.0 or higher of `com.github.sinminseok:snail-catch.`
+You must use version 1.1.0 or higher of `com.github.sinminseok:snail-catch.`
 
 **3. Configure application.yml**  
 
