@@ -1,7 +1,7 @@
 // 버전 푸쉬
 // ./gradlew clean shadowJar publish
-// git tag 1.0.0
-// git push origin 1.0.0
+// git tag 1.0.2
+// git push origin 1.0.2
 
 plugins {
     id 'java-library'
@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '1.0.1'
+version = '1.0.2'
 
 java {
     toolchain {
@@ -24,15 +24,16 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
+//    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.5"))
+//
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//    implementation 'org.springframework:spring-context'
+//    implementation 'org.springframework:spring-web'
 
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'org.springframework:spring-aop'
-    implementation 'org.springframework:spring-context'
-    implementation 'org.springframework:spring-web'
+    compileOnly platform("org.springframework.boot:spring-boot-dependencies:3.2.5")
+    compileOnly 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.springframework:spring-context'
+    compileOnly 'org.springframework:spring-web'
 
     api 'p6spy:p6spy:3.9.1'
     implementation 'com.github.vertical-blank:sql-formatter:2.0.3'
@@ -52,9 +53,15 @@ shadowJar {
     archiveBaseName.set('snailcatch-sdk-fat')
     archiveVersion.set(version)
     archiveClassifier.set('')
-    mergeServiceFiles()
-}
 
+    mergeServiceFiles()
+
+    dependencies {
+        exclude(dependency('org.springframework.boot:spring-boot-starter'))
+        exclude(dependency('org.springframework:spring-context'))
+        exclude(dependency('org.springframework:spring-web'))
+    }
+}
 publishing {
     publications {
         mavenJava(MavenPublication) {
