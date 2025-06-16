@@ -1,6 +1,6 @@
 // 버전 푸쉬
 // ./gradlew clean shadowJar publish
-// git tag 1.0.3
+// git tag 1.0.4
 // git push origin 1.0.3
 
 plugins {
@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.snailcatch'
-version = '1.0.3'
+version = '1.0.4'
 
 java {
     toolchain {
