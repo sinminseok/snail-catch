@@ -122,10 +122,6 @@ Click on any query to see detailed information and its execution plan.
 | ---------------------------------------------------------------- | ------------------------------------------------------------- |
 | `p6spy:p6spy:3.9.1`                                              | Core dependency for JDBC query logging                        |
 | `com.github.vertical-blank:sql-formatter:2.0.3`                  | SQL formatting utility (pretty print)                         |
-| `org.springframework.boot:spring-boot-starter-aop`               | Enables AOP-based SQL trace                                   |
-| `org.springframework.boot:spring-boot-starter-data-jpa`          | JPA repository support                                        |
-| `org.springframework.boot:spring-boot-starter-jdbc`              | JDBC query tracing with P6Spy                                 |
-| `org.springframework:spring-aop`, `spring-context`, `spring-web` | Core Spring framework libraries                               |
 | `lombok:1.18.30`                                                 | Lombok is required at **compile time** (annotation processor) |
 
 ## Important Notes for SDK Consumers
