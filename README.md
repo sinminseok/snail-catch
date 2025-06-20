@@ -109,10 +109,7 @@ Click on any query to see detailed information and its execution plan.
 | ---------------------------------------------------------------------- | ----------------------------------------------------------- |
 | **Java Version**                                                       | **Java 17 or higher required**                              |
 | → Configured via `JavaLanguageVersion.of(17)`                          |                                                             |
-| **Spring Boot Version**                                                | **3.2.5 or higher recommended**                             |
-| → Using BOM: `org.springframework.boot:spring-boot-dependencies:3.2.5` |                                                             |
-| **Gradle Plugins**                                                     | `shadowJar (8.1.1)`, `spring-dependency-management (1.1.7)` |
-| → Ensure compatibility with your environment                           |                                                             |
+
 
 ##  Dependencies
 
@@ -132,8 +129,6 @@ Click on any query to see detailed information and its execution plan.
 ❗ Java 17 or higher is required.
 → Compilation will fail if you're using Java 11 or below.
 
-❗ Spring Boot 3.2.5 is the baseline
-→ If your project uses a lower Spring Boot version, especially below 3.x, dependency conflicts may occur (notably with spring-aop, spring-context, etc.).
 
 ⚠️ Be careful with P6Spy
 → If you're already using p6spy in your project, avoid duplicate configurations.
