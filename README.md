@@ -56,6 +56,7 @@ We will update the version in the future to support other databases as well.
 **1. Get a REST API Key**  
 
   Visit http://15.165.96.198/settings/api-key to generate your REST API key.
+  **We apologize. The service is temporarily unavailable due to a server issue.**
 
 ![API Key View](photo/api-key-view.png)
 
